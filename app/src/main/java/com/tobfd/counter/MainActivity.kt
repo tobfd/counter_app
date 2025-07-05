@@ -17,11 +17,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +49,8 @@ fun CounterButton() {
     val count = remember { mutableIntStateOf(0) }
     val haptic = LocalHapticFeedback.current
     val colorScheme = MaterialTheme.colorScheme
-    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    val stepSize = remember { mutableIntStateOf(1) }
+    val multiplierIsExpanded = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -71,7 +72,7 @@ fun CounterButton() {
             Row {
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    count.intValue--
+                    count.intValue -= stepSize.intValue
                                  },
                     colors = counterButtonColors())
                 {
@@ -80,7 +81,7 @@ fun CounterButton() {
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    count.intValue++
+                    count.intValue += stepSize.intValue
                                  }, colors = counterButtonColors()) {
                     Text("Increment", color = Color.Green)
                 }
