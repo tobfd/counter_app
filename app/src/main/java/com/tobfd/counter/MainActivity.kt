@@ -1,21 +1,36 @@
 package com.tobfd.counter
 
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import android.os.Bundle
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,14 +67,21 @@ fun CounterButton() {
     val colorScheme = MaterialTheme.colorScheme
     val stepSize = remember { mutableIntStateOf(1) }
     val multiplierIsExpanded = remember { mutableStateOf(false) }
+    val customTextInput = remember { mutableStateOf("") }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val showSnackbar = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorScheme.background),
-        contentAlignment = Alignment.Center
+            .background(colorScheme.background)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Spacer(modifier = Modifier.height(148.dp))
             Text(
                 text = "${count.intValue}",
                 color = colorScheme.onBackground,
@@ -66,38 +89,139 @@ fun CounterButton() {
                 fontWeight = FontWeight.Bold
             )
 
-
             Spacer(modifier = Modifier.height(16.dp))
 
             Row {
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue -= stepSize.intValue
-                                 },
-                    colors = counterButtonColors())
-                {
+                }, colors = counterButtonColors()) {
                     Text("Decrement", color = Color.Yellow)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue += stepSize.intValue
-                                 }, colors = counterButtonColors()) {
+                }, colors = counterButtonColors()) {
                     Text("Increment", color = Color.Green)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue = 0
-                                 }, enabled = count.intValue != 0, colors = counterButtonColors()) {
+                }, enabled = count.intValue != 0, colors = counterButtonColors()) {
                     Text("Reset", color = Color.Red)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                multiplierIsExpanded.value = !multiplierIsExpanded.value
+            }, colors = counterButtonColors()) {
+                Text("Multiplier ${stepSize.intValue}", color = colorScheme.secondary)
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(imageVector = if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = null,
+                    tint = colorScheme.secondary)
+            }
+
+            if (multiplierIsExpanded.value) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        stepSize.intValue = -10
+                    }, colors = counterButtonColors()) {
+                        Text("-10", color = colorScheme.secondary)
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        stepSize.intValue = -5
+                    }, colors = counterButtonColors()) {
+                        Text("-5", color = colorScheme.secondary)
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        stepSize.intValue = 5
+                    }, colors = counterButtonColors()) {
+                        Text("+5", color = colorScheme.secondary)
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        stepSize.intValue = 10
+                    }, colors = counterButtonColors()) {
+                        Text("+10", color = colorScheme.secondary)
+                    }
+
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row {
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        stepSize.intValue = 1
+                    }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
+                        Text("Reset", color = Color.Red)
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row {
+                    TextField(
+                        value = customTextInput.value,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        onValueChange = {
+                            customTextInput.value = it
+                        },
+                        label = { Text("Custom") },
+                        singleLine = true,
+                        modifier = Modifier.width(120.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        val value = customTextInput.value.toIntOrNull()
+                        if (value != null) {
+                            stepSize.intValue = value
+                            customTextInput.value = ""
+                        } else {
+                            showSnackbar.value = true
+                        }
+                    }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
+                        Text("Set", color = colorScheme.secondary)
+                    }
+                    if (showSnackbar.value) {
+                        LaunchedEffect(Unit) {
+                            snackbarHostState.showSnackbar("Please enter a valid number!")
+                            showSnackbar.value = false
+                        }
+                        customTextInput.value = ""
+                    }
                 }
             }
         }
 
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(WindowInsets.ime.asPaddingValues())
+                .padding(bottom = 24.dp)
+        ) { data ->
+            androidx.compose.material3.Snackbar(
+                snackbarData = data,
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                shape = RoundedCornerShape(16.dp)
+            )
+        }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
