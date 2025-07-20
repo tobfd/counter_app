@@ -123,7 +123,7 @@ fun CounterButton() {
                 Text("Multiplier ${stepSize.intValue}", color = colorScheme.secondary)
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(imageVector = if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = null,
+                    contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
                     tint = colorScheme.secondary)
             }
 
