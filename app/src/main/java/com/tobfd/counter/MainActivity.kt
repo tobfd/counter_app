@@ -2,6 +2,7 @@ package com.tobfd.counter
 
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import android.os.Bundle
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
@@ -82,7 +83,7 @@ fun CounterButton() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Spacer(modifier = Modifier.height(148.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.counter_top_spacing)))
             Text(
                 text = "${count.intValue}",
                 color = colorScheme.onBackground,
@@ -90,7 +91,7 @@ fun CounterButton() {
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
 
             Row {
                 Button(onClick = {
@@ -99,14 +100,14 @@ fun CounterButton() {
                 }, colors = counterButtonColors()) {
                     Text(stringResource(R.string.decrement), color = Color.Yellow)
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue += stepSize.intValue
                 }, colors = counterButtonColors()) {
                     Text(stringResource(R.string.increment), color = Color.Green)
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue = 0
@@ -115,7 +116,7 @@ fun CounterButton() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_xlarge)))
 
             Button(onClick = {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -129,7 +130,7 @@ fun CounterButton() {
             }
 
             if (multiplierIsExpanded.value) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
                 Row {
                     Button(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -137,21 +138,21 @@ fun CounterButton() {
                     }, colors = counterButtonColors()) {
                         Text("-10", color = colorScheme.secondary)
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         stepSize.intValue = -5
                     }, colors = counterButtonColors()) {
                         Text("-5", color = colorScheme.secondary)
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         stepSize.intValue = 5
                     }, colors = counterButtonColors()) {
                         Text("+5", color = colorScheme.secondary)
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         stepSize.intValue = 10
@@ -160,7 +161,7 @@ fun CounterButton() {
                     }
 
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
 
                 Row {
                     Button(onClick = {
@@ -170,7 +171,7 @@ fun CounterButton() {
                         Text(stringResource(R.string.reset), color = Color.Red)
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
 
                 Row {
                     TextField(
@@ -183,7 +184,7 @@ fun CounterButton() {
                         singleLine = true,
                         modifier = Modifier.width(120.dp)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         val value = customTextInput.value.toIntOrNull()
@@ -213,7 +214,7 @@ fun CounterButton() {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(WindowInsets.ime.asPaddingValues())
-                .padding(bottom = 24.dp)
+                .padding(bottom = dimensionResource(R.dimen.spacing_large))
         ) { data ->
             androidx.compose.material3.Snackbar(
                 snackbarData = data,
