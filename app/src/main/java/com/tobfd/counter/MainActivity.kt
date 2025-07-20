@@ -68,8 +68,8 @@ fun CounterButton() {
     val stepSize = remember { mutableIntStateOf(1) }
     val multiplierIsExpanded = remember { mutableStateOf(false) }
     val customTextInput = remember { mutableStateOf("") }
-    val snackbarHostState = remember { SnackbarHostState() }
-    val showSnackbar = remember { mutableStateOf(false) }
+    val snackBarHostState = remember { SnackbarHostState() }
+    val showSnackBar = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -190,15 +190,15 @@ fun CounterButton() {
                             stepSize.intValue = value
                             customTextInput.value = ""
                         } else {
-                            showSnackbar.value = true
+                            showSnackBar.value = true
                         }
                     }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
                         Text("Set", color = colorScheme.secondary)
                     }
-                    if (showSnackbar.value) {
+                    if (showSnackBar.value) {
                         LaunchedEffect(Unit) {
-                            snackbarHostState.showSnackbar("Please enter a valid number!")
-                            showSnackbar.value = false
+                            snackBarHostState.showSnackbar("Please enter a valid number!")
+                            showSnackBar.value = false
                         }
                         customTextInput.value = ""
                     }
@@ -207,7 +207,7 @@ fun CounterButton() {
         }
 
         SnackbarHost(
-            hostState = snackbarHostState,
+            hostState = snackBarHostState,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(WindowInsets.ime.asPaddingValues())
