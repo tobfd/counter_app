@@ -199,10 +199,10 @@ fun CounterButton() {
                     val invalidNumberText: String = stringResource(R.string.invalidNumber)
                     if (showSnackBar.value) {
                         LaunchedEffect(Unit) {
+                            customTextInput.value = ""
                             snackBarHostState.showSnackbar(message = invalidNumberText)
                             showSnackBar.value = false
                         }
-                        customTextInput.value = ""
                     }
                 }
             }
