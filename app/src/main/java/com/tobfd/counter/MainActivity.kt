@@ -123,7 +123,7 @@ fun CounterButton() {
                 multiplierIsExpanded.value = !multiplierIsExpanded.value
             }, colors = counterButtonColors()) {
                 Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = colorScheme.secondary)
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                 Icon(imageVector = if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
                     tint = colorScheme.secondary)
@@ -182,7 +182,7 @@ fun CounterButton() {
                         },
                         label = { Text(stringResource(R.string.custom)) },
                         singleLine = true,
-                        modifier = Modifier.width(120.dp)
+                        modifier = Modifier.width(140.dp)
                     )
                     Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
