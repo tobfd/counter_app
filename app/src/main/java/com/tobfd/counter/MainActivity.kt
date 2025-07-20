@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -96,21 +97,21 @@ fun CounterButton() {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue -= stepSize.intValue
                 }, colors = counterButtonColors()) {
-                    Text("Decrement", color = Color.Yellow)
+                    Text(stringResource(R.string.decrement), color = Color.Yellow)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue += stepSize.intValue
                 }, colors = counterButtonColors()) {
-                    Text("Increment", color = Color.Green)
+                    Text(stringResource(R.string.increment), color = Color.Green)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue = 0
                 }, enabled = count.intValue != 0, colors = counterButtonColors()) {
-                    Text("Reset", color = Color.Red)
+                    Text(stringResource(R.string.reset), color = Color.Red)
                 }
             }
 
@@ -120,7 +121,7 @@ fun CounterButton() {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 multiplierIsExpanded.value = !multiplierIsExpanded.value
             }, colors = counterButtonColors()) {
-                Text("Multiplier ${stepSize.intValue}", color = colorScheme.secondary)
+                Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = colorScheme.secondary)
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(imageVector = if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
@@ -166,7 +167,7 @@ fun CounterButton() {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         stepSize.intValue = 1
                     }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
-                        Text("Reset", color = Color.Red)
+                        Text(stringResource(R.string.reset), color = Color.Red)
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -178,7 +179,7 @@ fun CounterButton() {
                         onValueChange = {
                             customTextInput.value = it
                         },
-                        label = { Text("Custom") },
+                        label = { Text(stringResource(R.string.custom)) },
                         singleLine = true,
                         modifier = Modifier.width(120.dp)
                     )
@@ -193,11 +194,12 @@ fun CounterButton() {
                             showSnackBar.value = true
                         }
                     }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
-                        Text("Set", color = colorScheme.secondary)
+                        Text(stringResource(R.string.set), color = colorScheme.secondary)
                     }
+                    val invalidNumberText: String = stringResource(R.string.invalidNumber)
                     if (showSnackBar.value) {
                         LaunchedEffect(Unit) {
-                            snackBarHostState.showSnackbar("Please enter a valid number!")
+                            snackBarHostState.showSnackbar(message = invalidNumberText)
                             showSnackBar.value = false
                         }
                         customTextInput.value = ""
