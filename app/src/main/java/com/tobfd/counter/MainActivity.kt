@@ -82,6 +82,7 @@ fun CounterButton() {
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
+    val preselectableSteps = mutableListOf(-10, -5, 5, 10)
 
 
     val showMultiplierResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
@@ -152,9 +153,8 @@ fun CounterButton() {
 
             if (multiplierIsExpanded.value) {
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
-                val preselectableSteps = mutableListOf(-10, -5, 5, 10)
                 if (!showMultiplierResetButton) {
-                    preselectableSteps.add(2, 1)
+                    preselectableSteps.add(preselectableSteps.size / 2, 1)
                 }
                 Row {
                     for (step in preselectableSteps) {
