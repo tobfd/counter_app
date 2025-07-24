@@ -82,10 +82,10 @@ fun CounterButton() {
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
+
+
     val showMultiplierResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
     val animations by settingsDataStore.showAnimationsFlow.collectAsState(initial = true)
-    println(showMultiplierResetButton)
-    println(animations)
 
     Box(
         modifier = Modifier
