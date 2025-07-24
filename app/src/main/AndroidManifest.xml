@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Counter">
         <activity
+            android:name=".Settings"
+            android:exported="false"
+            android:label="@string/settings"
+            android:theme="@style/Theme.Counter" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

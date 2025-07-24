@@ -6,6 +6,8 @@
     <string name="reset">Zurücksetzen</string>
     <string name="multiplier">Multiplikator</string>
     <string name="custom">Benutzerdefiniert</string>
-    <string name="set">setzen</string>
-    <string name="invalidNumber">Bitte gebe eine gültige Zahl ein!</string>
+    <string name="set">Setzen</string>
+    <string name="invalidNumber">Bitte gib eine gültige Zahl ein!</string>
+    <string name="settings">Einstellungen</string>
+    <string name="back">Zurück</string>
 </resources>
