@@ -10,4 +10,7 @@
     <string name="invalidNumber">Bitte gib eine gültige Zahl ein!</string>
     <string name="settings">Einstellungen</string>
     <string name="back">Zurück</string>
+    <string name="showresetbutton">Reset-Button anzeigen</string>
+    <string name="showanimation">Animationen</string>
+    <string name="showresetbuttondescription">Ob es einen extra Reset-Button für den Multiplikator geben soll oder die 1 in den vordefinierten Werten zu finden ist.</string>
 </resources>

@@ -22,9 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.getValue
 import kotlinx.coroutines.launch
@@ -82,38 +80,60 @@ fun Settings(onBack: () -> Unit) {
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Reset-Button anzeigen")
-                Switch(
-                    checked = showResetButton,
-                    onCheckedChange = {
-                        scope.launch {
-                            settingsDataStore.updateShowResetButton(it)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.showresetbutton),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Switch(
+                        checked = showResetButton,
+                        onCheckedChange = {
+                            scope.launch {
+                                settingsDataStore.updateShowResetButton(it)
+                            }
                         }
-                    }
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.showresetbuttondescription),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(0.85f)
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            //Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Animationen")
-                Switch(
-                    checked = showAnimations,
-                    onCheckedChange = {
-                        scope.launch {
-                            settingsDataStore.updateShowAnimations(it)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.showanimation),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Switch(
+                        checked = showAnimations,
+                        onCheckedChange = {
+                            scope.launch {
+                                settingsDataStore.updateShowAnimations(it)
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

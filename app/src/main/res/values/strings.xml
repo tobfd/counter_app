@@ -9,4 +9,7 @@
     <string name="invalidNumber">Please enter a valid number!</string>
     <string name="settings">Settings</string>
     <string name="back">Back</string>
+    <string name="showresetbutton">show Reset-Button</string>
+    <string name="showanimation">Animations</string>
+    <string name="showresetbuttondescription">Whether there should be an extra reset button for the multiplier or the 1 can be found in the predefined values.</string>
 </resources>
