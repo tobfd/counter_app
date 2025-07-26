@@ -6,7 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.core.animateFloatAsState
@@ -84,7 +83,6 @@ fun CounterButton() {
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
-    val scope = rememberCoroutineScope()
     val preselectableSteps = mutableListOf(-10, -5, 5, 10)
 
 
