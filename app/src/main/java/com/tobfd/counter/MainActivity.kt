@@ -125,9 +125,7 @@ fun CounterButton() {
                 }
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
-                    scope.launch {
-                        HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
-                    }
+                    HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
                     count.intValue = 0
                 }, enabled = count.intValue != 0, colors = counterButtonColors()) {
                     Text(stringResource(R.string.reset), color = Color.Red)
@@ -174,9 +172,7 @@ fun CounterButton() {
                 if (showMultiplierResetButton) {
                     Row {
                         Button(onClick = {
-                            scope.launch {
-                                HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
-                            }
+                            HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
                             stepSize.intValue = 1
                         }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
                             Text(stringResource(R.string.reset), color = Color.Red)

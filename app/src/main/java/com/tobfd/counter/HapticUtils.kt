@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 object HapticUtils {
-    suspend fun performHapticFeedback(
+    fun performHapticFeedback(
         context: Context? = null,
         haptic: HapticFeedback? = null,
         isSwitch: Boolean = false,

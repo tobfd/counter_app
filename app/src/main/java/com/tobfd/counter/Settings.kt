@@ -110,8 +110,8 @@ fun Settings(onBack: () -> Unit) {
                     Switch(
                         checked = showResetButton,
                         onCheckedChange = {
+                            performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                             scope.launch {
-                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                                 settingsDataStore.updateShowResetButton(it)
                             }
                         }
@@ -142,8 +142,8 @@ fun Settings(onBack: () -> Unit) {
                     Switch(
                         checked = showAnimations,
                         onCheckedChange = {
+                            performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                             scope.launch {
-                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                                 settingsDataStore.updateShowAnimations(it)
                             }
                         }
@@ -166,8 +166,8 @@ fun Settings(onBack: () -> Unit) {
                     Switch(
                         checked = hapticFeedback,
                         onCheckedChange = {
+                            performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                             scope.launch {
-                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                                 settingsDataStore.updateHapticFeedback(it)
                             }
                         }
@@ -198,8 +198,8 @@ fun Settings(onBack: () -> Unit) {
                                 text = { Text(stringResource(R.string.darkmode)) },
                                 onClick = {
                                     themeDropdownExpanded = false
+                                    performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                     scope.launch {
-                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                         settingsDataStore.updateAppTheme("dark_mode")
                                     }
                                 },
@@ -209,8 +209,8 @@ fun Settings(onBack: () -> Unit) {
                                 text = { Text(stringResource(R.string.lightmode)) },
                                 onClick = {
                                     themeDropdownExpanded = false
+                                    performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                     scope.launch {
-                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                         settingsDataStore.updateAppTheme("light_mode")
                                     }
                                 },
@@ -220,8 +220,8 @@ fun Settings(onBack: () -> Unit) {
                                 text = { Text(stringResource(R.string.system)) },
                                 onClick = {
                                     themeDropdownExpanded = false
+                                    performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                     scope.launch {
-                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
                                         settingsDataStore.updateAppTheme("system")
                                     }
                                 },
