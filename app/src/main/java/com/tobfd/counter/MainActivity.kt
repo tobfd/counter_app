@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.compose.runtime.collectAsState
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.material.icons.filled.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.core.animateFloatAsState
