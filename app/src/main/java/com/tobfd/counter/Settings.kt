@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,23 +24,36 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.rounded.Autorenew
+import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.tobfd.counter.HapticUtils.performHapticFeedback
 import com.tobfd.counter.ui.theme.CounterTheme
+import com.tobfd.counter.ui.theme.darkMode
 
 class Settings : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CounterTheme {
+            val context = LocalContext.current
+            CounterTheme(settingsDataStore = SettingsDataStore(context)) {
                 Settings(onBack = { finish() })
             }
         }
@@ -53,6 +67,7 @@ fun Settings(onBack: () -> Unit) {
     val settingsDataStore = remember { SettingsDataStore(context) }
     val showResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
     val showAnimations by settingsDataStore.showAnimationsFlow.collectAsState(initial = true)
+    val hapticFeedback by settingsDataStore.hapticFeedbackFlow.collectAsState(initial = true)
     val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -96,6 +111,7 @@ fun Settings(onBack: () -> Unit) {
                         checked = showResetButton,
                         onCheckedChange = {
                             scope.launch {
+                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                                 settingsDataStore.updateShowResetButton(it)
                             }
                         }
@@ -110,8 +126,6 @@ fun Settings(onBack: () -> Unit) {
                         .fillMaxWidth(0.85f)
                 )
             }
-
-            //Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
 
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -129,10 +143,92 @@ fun Settings(onBack: () -> Unit) {
                         checked = showAnimations,
                         onCheckedChange = {
                             scope.launch {
+                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
                                 settingsDataStore.updateShowAnimations(it)
                             }
                         }
                     )
+                }
+            }
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.hapticfeedback),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Switch(
+                        checked = hapticFeedback,
+                        onCheckedChange = {
+                            scope.launch {
+                                HapticUtils.performHapticFeedback(context = context, settingsDataStore = settingsDataStore, isSwitch = true)
+                                settingsDataStore.updateHapticFeedback(it)
+                            }
+                        }
+                    )
+                }
+            }
+
+            var themeDropdownExpanded by remember { mutableStateOf(false) }
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val haptic = LocalHapticFeedback.current
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(R.string.apptheme),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopEnd)) {
+                        Button(onClick = { themeDropdownExpanded = true }) {
+                            if (darkMode(settingsDataStore)) Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) else Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode))
+                        }
+                        DropdownMenu(expanded = themeDropdownExpanded, onDismissRequest = { themeDropdownExpanded = false }) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.darkmode)) },
+                                onClick = {
+                                    themeDropdownExpanded = false
+                                    scope.launch {
+                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
+                                        settingsDataStore.updateAppTheme("dark_mode")
+                                    }
+                                },
+                                leadingIcon = { Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.lightmode)) },
+                                onClick = {
+                                    themeDropdownExpanded = false
+                                    scope.launch {
+                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
+                                        settingsDataStore.updateAppTheme("light_mode")
+                                    }
+                                },
+                                leadingIcon = { Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode)) }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.system)) },
+                                onClick = {
+                                    themeDropdownExpanded = false
+                                    scope.launch {
+                                        performHapticFeedback(settingsDataStore = settingsDataStore, haptic = haptic)
+                                        settingsDataStore.updateAppTheme("system")
+                                    }
+                                },
+                                leadingIcon = { Icon(Icons.Rounded.Autorenew, contentDescription = stringResource(R.string.system)) }
+                            )
+                        }
+                    }
                 }
             }
         }

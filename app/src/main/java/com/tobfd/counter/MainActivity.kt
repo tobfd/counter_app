@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.compose.runtime.collectAsState
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.core.animateFloatAsState
@@ -45,13 +47,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tobfd.counter.ui.theme.CounterTheme
@@ -62,7 +62,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CounterTheme {
+            val context = LocalContext.current
+            val settingsDataStore = remember { SettingsDataStore(context) }
+            CounterTheme(settingsDataStore = settingsDataStore) {
                 CounterButton()
             }
         }
@@ -82,6 +84,7 @@ fun CounterButton() {
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
+    val scope = rememberCoroutineScope()
     val preselectableSteps = mutableListOf(-10, -5, 5, 10)
 
 
@@ -110,21 +113,21 @@ fun CounterButton() {
 
             Row {
                 Button(onClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue -= stepSize.intValue
                 }, colors = counterButtonColors()) {
                     Text(stringResource(R.string.decrement), color = Color.Yellow)
                 }
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     count.intValue += stepSize.intValue
                 }, colors = counterButtonColors()) {
                     Text(stringResource(R.string.increment), color = Color.Green)
                 }
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    scope.launch {
+                        HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
+                    }
                     count.intValue = 0
                 }, enabled = count.intValue != 0, colors = counterButtonColors()) {
                     Text(stringResource(R.string.reset), color = Color.Red)
@@ -139,7 +142,6 @@ fun CounterButton() {
             )
 
             Button(onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 multiplierIsExpanded.value = !multiplierIsExpanded.value
             }, colors = counterButtonColors()) {
                 Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = colorScheme.secondary)
@@ -159,7 +161,6 @@ fun CounterButton() {
                 Row {
                     for (step in preselectableSteps) {
                         Button(onClick = {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             stepSize.intValue = step
                         }, colors = counterButtonColors(), enabled = stepSize.intValue != step) {
                             Text(step.toString(), color = colorScheme.secondary)
@@ -173,7 +174,9 @@ fun CounterButton() {
                 if (showMultiplierResetButton) {
                     Row {
                         Button(onClick = {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            scope.launch {
+                                HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
+                            }
                             stepSize.intValue = 1
                         }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
                             Text(stringResource(R.string.reset), color = Color.Red)
@@ -195,7 +198,6 @@ fun CounterButton() {
                     )
                     Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     Button(onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         val value = customTextInput.value.toIntOrNull()
                         if (value != null) {
                             stepSize.intValue = value
@@ -220,7 +222,6 @@ fun CounterButton() {
 
         IconButton(
             onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 val intent = Intent(context, Settings::class.java)
                 context.startActivity(intent)
             },
@@ -251,12 +252,5 @@ fun CounterButton() {
                 shape = RoundedCornerShape(16.dp)
             )
         }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CounterTheme {
-        CounterButton()
     }
 }

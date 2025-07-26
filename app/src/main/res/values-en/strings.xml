@@ -13,4 +13,9 @@
     <string name="showresetbutton">show Reset-Button</string>
     <string name="showanimation">Animations</string>
     <string name="showresetbuttondescription">Whether there should be an extra reset button for the multiplier or the 1 can be found in the predefined values.</string>
+    <string name="hapticfeedback">Haptic Feedback</string>
+    <string name="apptheme">App-Theme</string>
+    <string name="darkmode">Dark Mode</string>
+    <string name="lightmode">Light Mode</string>
+    <string name="system">System</string>
 </resources>
