@@ -189,7 +189,7 @@ fun Settings(onBack: () -> Unit) {
                         text = stringResource(R.string.apptheme),
                         style = MaterialTheme.typography.titleMedium
                     )
-                    Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopEnd)) {
+                    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)) {
                         Button(onClick = { themeDropdownExpanded = true }) {
                             if (getUseDarkTheme(settingsDataStore)) Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) else Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode))
                         }
