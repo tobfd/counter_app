@@ -13,7 +13,7 @@ fun counterButtonColors(): ButtonColors {
     val colorScheme = MaterialTheme.colorScheme
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
-    val isDark = darkMode(settingsDataStore)
+    val isDark = getUseDarkTheme(settingsDataStore)
     return ButtonDefaults.buttonColors(
         containerColor = if (isDark) colorScheme.surfaceVariant else colorScheme.primary,
         contentColor = colorScheme.onPrimary

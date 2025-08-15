@@ -45,7 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tobfd.counter.HapticUtils.performHapticFeedback
 import com.tobfd.counter.ui.theme.CounterTheme
-import com.tobfd.counter.ui.theme.darkMode
+import com.tobfd.counter.ui.theme.getUseDarkTheme
 
 class Settings : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -191,7 +191,7 @@ fun Settings(onBack: () -> Unit) {
                     )
                     Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopEnd)) {
                         Button(onClick = { themeDropdownExpanded = true }) {
-                            if (darkMode(settingsDataStore)) Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) else Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode))
+                            if (getUseDarkTheme(settingsDataStore)) Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) else Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode))
                         }
                         DropdownMenu(expanded = themeDropdownExpanded, onDismissRequest = { themeDropdownExpanded = false }) {
                             DropdownMenuItem(
