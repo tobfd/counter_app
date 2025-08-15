@@ -87,6 +87,7 @@ fun CounterButton() {
 
     val showMultiplierResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
     val animations by settingsDataStore.showAnimationsFlow.collectAsState(initial = true)
+    val triggerHapticFeedback = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -122,7 +123,7 @@ fun CounterButton() {
                 }
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
                 Button(onClick = {
-                    HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
+                    triggerHapticFeedback.value = true
                     count.intValue = 0
                 }, enabled = count.intValue != 0, colors = counterButtonColors()) {
                     Text(stringResource(R.string.reset), color = Color.Red)
@@ -169,7 +170,7 @@ fun CounterButton() {
                 if (showMultiplierResetButton) {
                     Row {
                         Button(onClick = {
-                            HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
+                            triggerHapticFeedback.value = true
                             stepSize.intValue = 1
                         }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
                             Text(stringResource(R.string.reset), color = Color.Red)
@@ -209,6 +210,12 @@ fun CounterButton() {
                             showSnackBar.value = false
                         }
                     }
+                }
+            }
+            if (triggerHapticFeedback.value) {
+                LaunchedEffect(Unit) {
+                    HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
+                    triggerHapticFeedback.value = false
                 }
             }
         }

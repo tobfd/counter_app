@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 object HapticUtils {
-    fun performHapticFeedback(
+    suspend fun performHapticFeedback(
         context: Context? = null,
         haptic: HapticFeedback? = null,
         isSwitch: Boolean = false,
         settingsDataStore: SettingsDataStore
     ) {
-        if (runBlocking { settingsDataStore.hapticFeedbackFlow.first() }) {
+        if (settingsDataStore.hapticFeedbackFlow.first()) {
             if (isSwitch) {
                 val vibratorManager = context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
                 val vibrator = vibratorManager.defaultVibrator
