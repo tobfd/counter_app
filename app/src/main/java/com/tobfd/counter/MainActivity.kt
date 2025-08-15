@@ -220,7 +220,7 @@ fun CounterButton() {
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 16.dp)
+                .padding(top = 40.dp)
                 .padding(dimensionResource(R.dimen.spacing_medium))
         ) {
             Icon(
