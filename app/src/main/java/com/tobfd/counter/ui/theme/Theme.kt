@@ -54,17 +54,7 @@ fun CounterTheme(
     settingsDataStore: SettingsDataStore?,
     content: @Composable () -> Unit
 ) {
-    val useDarkTheme: Boolean = if (settingsDataStore != null) {
-        val systemThemeIsDark = isSystemInDarkTheme()
-        val appThemePreference by settingsDataStore.appThemeFlow.collectAsState(initial = "system")
-        when (appThemePreference) {
-            "dark_mode" -> true
-            "light_mode" -> false
-            else -> systemThemeIsDark
-        }
-    } else {
-        isSystemInDarkTheme()
-    }
+    val useDarkTheme: Boolean = getUseDarkTheme(settingsDataStore)
 
     val colorScheme = when {
         dynamicColor -> {
