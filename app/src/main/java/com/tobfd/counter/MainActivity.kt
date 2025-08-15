@@ -84,7 +84,6 @@ fun CounterButton() {
     val settingsDataStore = remember { SettingsDataStore(context) }
     val preselectableSteps = mutableListOf(-10, -5, 5, 10)
 
-
     val showMultiplierResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
     val animations by settingsDataStore.showAnimationsFlow.collectAsState(initial = true)
     val triggerHapticFeedback = remember { mutableStateOf(false) }
