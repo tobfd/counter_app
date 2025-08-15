@@ -180,7 +180,6 @@ fun Settings(onBack: () -> Unit) {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val haptic = LocalHapticFeedback.current
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -190,6 +189,7 @@ fun Settings(onBack: () -> Unit) {
                         style = MaterialTheme.typography.titleMedium
                     )
                     Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)) {
+                        val haptic = LocalHapticFeedback.current
                         Button(onClick = { themeDropdownExpanded = true }) {
                             if (getUseDarkTheme(settingsDataStore)) Icon(Icons.Rounded.DarkMode, contentDescription = stringResource(R.string.darkmode)) else Icon(Icons.Rounded.LightMode, contentDescription = stringResource(R.string.lightmode))
                         }
