@@ -82,11 +82,14 @@ fun CounterButton() {
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
-    val preselectableSteps = mutableListOf(-10, -5, 5, 10)
 
     val showMultiplierResetButton by settingsDataStore.showResetButtonFlow.collectAsState(initial = true)
     val animations by settingsDataStore.showAnimationsFlow.collectAsState(initial = true)
     val triggerHapticFeedback = remember { mutableStateOf(false) }
+    val preselectableSteps = remember(showMultiplierResetButton) {
+        if (showMultiplierResetButton) listOf(-10, -5, 5, 10)
+        else listOf(-10, -5, 1, 5, 10)
+    }
 
     Box(
         modifier = Modifier
@@ -150,9 +153,7 @@ fun CounterButton() {
 
             if (multiplierIsExpanded.value) {
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
-                if (!showMultiplierResetButton) {
-                    preselectableSteps.add(preselectableSteps.size / 2, 1)
-                }
+
                 Row {
                     for (step in preselectableSteps) {
                         Button(onClick = {
@@ -162,8 +163,8 @@ fun CounterButton() {
                         }
                         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     }
-
                 }
+
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
 
                 if (showMultiplierResetButton) {
@@ -211,6 +212,7 @@ fun CounterButton() {
                     }
                 }
             }
+
             if (triggerHapticFeedback.value) {
                 LaunchedEffect(Unit) {
                     HapticUtils.performHapticFeedback(haptic = haptic, settingsDataStore = settingsDataStore)
@@ -235,7 +237,6 @@ fun CounterButton() {
                 tint = colorScheme.secondary
             )
         }
-
 
         SnackbarHost(
             hostState = snackBarHostState,
