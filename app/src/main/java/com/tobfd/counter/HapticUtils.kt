@@ -6,7 +6,6 @@ import android.content.Context
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 
 object HapticUtils {
     suspend fun performHapticFeedback(
