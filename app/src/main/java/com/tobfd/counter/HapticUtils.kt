@@ -16,9 +16,9 @@ object HapticUtils {
     ) {
         if (settingsDataStore.hapticFeedbackFlow.first()) {
             if (isSwitch) {
-                val vibratorManager = context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                val vibrator = vibratorManager.defaultVibrator
-                vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+                val vibratorManager = context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
+                val vibrator = vibratorManager?.defaultVibrator
+                vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
             } else {
                 haptic?.performHapticFeedback(HapticFeedbackType.LongPress)
             }
