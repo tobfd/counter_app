@@ -41,6 +41,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -74,12 +75,12 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CounterButton() {
-    val count = remember { mutableIntStateOf(0) }
+    val count = rememberSaveable { mutableIntStateOf(0) }
     val haptic = LocalHapticFeedback.current
     val colorScheme = MaterialTheme.colorScheme
-    val stepSize = remember { mutableIntStateOf(1) }
-    val multiplierIsExpanded = remember { mutableStateOf(false) }
-    val customTextInput = remember { mutableStateOf("") }
+    val stepSize = rememberSaveable { mutableIntStateOf(1) }
+    val multiplierIsExpanded = rememberSaveable { mutableStateOf(false) }
+    val customTextInput = rememberSaveable { mutableStateOf("") }
     val snackBarHostState = remember { SnackbarHostState() }
     val showSnackBar = remember { mutableStateOf(false) }
     val context = LocalContext.current
