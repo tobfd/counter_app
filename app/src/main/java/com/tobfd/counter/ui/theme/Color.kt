@@ -21,3 +21,5 @@ val LightOnSurfaceVariant = Color(0xFF49454F)
 val LightOutline = Color(0xFF79747E)
 val darkButtonColor = Color(0xFF2D2D2D)
 val lightButtonColor = Color(0xFF404040)
+val darkContentColor = Color.White
+val lightContentColor = Color.White
