@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Counter</string>
+    <string name="decrement">Décrémenter</string>
+    <string name="increment">Incrémenter</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="multiplier">Multiplicateur</string>
+    <string name="custom">Personnalisé</string>
+    <string name="set">Définir</string>
+    <string name="invalidNumber">Veuillez entrer un nombre valide !</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Counter</string>
+    <string name="decrement">Уменьшить</string>
+    <string name="increment">Увеличить</string>
+    <string name="reset">Сбросить</string>
+    <string name="multiplier">Множитель</string>
+    <string name="custom">Пользовательский</string>
+    <string name="set">Установить</string>
+    <string name="invalidNumber"> Пожалуйста, введите корректное число!</string>
+</resources>
