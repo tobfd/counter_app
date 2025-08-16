@@ -11,7 +11,6 @@ import com.tobfd.counter.SettingsDataStore
 
 @Composable
 fun counterButtonColors(): ButtonColors {
-    val colorScheme = MaterialTheme.colorScheme
     val context = LocalContext.current
     val settingsDataStore = remember { SettingsDataStore(context) }
     val isDark = getUseDarkTheme(settingsDataStore)
