@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Counter</string>
+    <string name="app_name">Compteur</string>
     <string name="decrement">Décrémenter</string>
     <string name="increment">Incrémenter</string>
     <string name="reset">Réinitialiser</string>
@@ -8,4 +7,16 @@
     <string name="custom">Personnalisé</string>
     <string name="set">Définir</string>
     <string name="invalidNumber">Veuillez entrer un nombre valide !</string>
+    <string name="settings">Paramètres</string>
+    <string name="back">Retour</string>
+    <string name="showresetbutton">Afficher le bouton de réinitialisation</string>
+    <string name="showanimation">Animations</string>
+    <string name="showresetbuttondescription">Indique s\'il doit y avoir un bouton de réinitialisation supplémentaire pour le multiplicateur ou si le 1 peut être trouvé dans les valeurs prédéfinies.</string>
+    <string name="hapticfeedback">Retour haptique</string>
+    <string name="apptheme">Thème de l\'application</string>
+    <string name="darkmode">Mode sombre</string>
+    <string name="lightmode">Mode clair</string>
+    <string name="system">Système</string>
+    <string name="counter_value">Valeur du compteur</string>
+    <string name="multiplier_settings">Paramètres du multiplicateur</string>
 </resources>

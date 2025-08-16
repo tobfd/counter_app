@@ -18,4 +18,6 @@
     <string name="darkmode">Dunkles Design</string>
     <string name="lightmode">Helles Design</string>
     <string name="system">System</string>
+    <string name="multiplier_settings">Multiplikator-Einstellungen</string>
+    <string name="counter_value">Zählerwert</string>
 </resources>

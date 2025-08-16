@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
@@ -105,33 +106,60 @@ fun CounterButton() {
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.counter_top_spacing)))
-            Text(
-                text = "${count.intValue}",
-                color = colorScheme.onBackground,
-                fontSize = 48.sp,
-                fontWeight = FontWeight.Bold
-            )
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
+            com.tobfd.counter.ui.components.CounterSurface(
+                title = stringResource(R.string.counter_value),
+                tonalElevation = 2.dp
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "${count.intValue}",
+                        color = colorScheme.onSurfaceVariant,
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.Bold
+                    )
 
-            Row {
-                Button(onClick = {
-                    count.intValue -= stepSize.intValue
-                }, colors = counterButtonColors()) {
-                    Text(stringResource(R.string.decrement), color = Color.Yellow)
-                }
-                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
-                Button(onClick = {
-                    count.intValue += stepSize.intValue
-                }, colors = counterButtonColors()) {
-                    Text(stringResource(R.string.increment), color = Color.Green)
-                }
-                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
-                Button(onClick = {
-                    triggerHapticFeedback.value = true
-                    count.intValue = 0
-                }, enabled = count.intValue != 0, colors = counterButtonColors()) {
-                    Text(stringResource(R.string.reset), color = Color.Red)
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
+
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(
+                            onClick = {
+                                count.intValue -= stepSize.intValue
+                            },
+                            colors = counterButtonColors(),
+                            modifier = Modifier.width(120.dp)
+                        ) {
+                            Text(stringResource(R.string.decrement), color = Color.Yellow)
+                        }
+                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
+                        Button(
+                            onClick = {
+                                count.intValue += stepSize.intValue
+                            },
+                            colors = counterButtonColors(),
+                            modifier = Modifier.width(120.dp)
+                        ) {
+                            Text(stringResource(R.string.increment), color = Color.Green)
+                        }
+                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_medium)))
+                        Button(
+                            onClick = {
+                                triggerHapticFeedback.value = true
+                                count.intValue = 0
+                            },
+                            enabled = count.intValue != 0,
+                            colors = counterButtonColors(),
+                            modifier = Modifier.width(120.dp)
+                        ) {
+                            Text(stringResource(R.string.reset), color = Color.Red)
+                        }
+                    }
                 }
             }
 
@@ -142,75 +170,84 @@ fun CounterButton() {
                 label = "MultiplierIconRotation"
             )
 
-            Button(onClick = {
-                multiplierIsExpanded.value = !multiplierIsExpanded.value
-            }, colors = counterButtonColors()) {
-                Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = Color.White)
-                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
-                Icon(imageVector = if (animations) Icons.Filled.ArrowDropDown else if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
-                    tint = Color.White,
-                    modifier = if (animations) Modifier.rotate(arrowRotation) else Modifier
-                )
-            }
-
-            if (multiplierIsExpanded.value) {
-                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
-
-                Row {
-                    for (step in preselectableSteps) {
-                        Button(onClick = {
-                            stepSize.intValue = step
-                        }, colors = counterButtonColors(), enabled = stepSize.intValue != step) {
-                            Text(step.toString(), color = Color.White)
-                        }
-                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
-
-                if (showMultiplierResetButton) {
-                    Row {
-                        Button(onClick = {
-                            triggerHapticFeedback.value = true
-                            stepSize.intValue = 1
-                        }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
-                            Text(stringResource(R.string.reset), color = Color.Red)
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
-                }
-
-                Row {
-                    TextField(
-                        value = customTextInput.value,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        onValueChange = {
-                            customTextInput.value = it
-                        },
-                        label = { Text(stringResource(R.string.custom)) },
-                        singleLine = true,
-                        modifier = Modifier.width(140.dp)
-                    )
-                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
+            com.tobfd.counter.ui.components.CounterSurface(
+                title = stringResource(R.string.multiplier_settings),
+                tonalElevation = 1.dp
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Button(onClick = {
-                        val value = customTextInput.value.toIntOrNull()
-                        if (value != null) {
-                            stepSize.intValue = value
-                            customTextInput.value = ""
-                        } else {
-                            showSnackBar.value = true
-                        }
-                    }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
-                        Text(stringResource(R.string.set), color = Color.White)
+                        multiplierIsExpanded.value = !multiplierIsExpanded.value
+                    }, colors = counterButtonColors()) {
+                        Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = Color.White)
+                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
+                        Icon(imageVector = if (animations) Icons.Filled.ArrowDropDown else if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
+                            tint = Color.White,
+                            modifier = if (animations) Modifier.rotate(arrowRotation) else Modifier
+                        )
                     }
-                    val invalidNumberText: String = stringResource(R.string.invalidNumber)
-                    if (showSnackBar.value) {
-                        LaunchedEffect(Unit) {
-                            customTextInput.value = ""
-                            snackBarHostState.showSnackbar(message = invalidNumberText)
-                            showSnackBar.value = false
+
+                    if (multiplierIsExpanded.value) {
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_medium)))
+
+                        Row {
+                            for (step in preselectableSteps) {
+                                Button(onClick = {
+                                    stepSize.intValue = step
+                                }, colors = counterButtonColors(), enabled = stepSize.intValue != step) {
+                                    Text(step.toString(), color = Color.White)
+                                }
+                                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
+
+                        if (showMultiplierResetButton) {
+                            Row {
+                                Button(onClick = {
+                                    triggerHapticFeedback.value = true
+                                    stepSize.intValue = 1
+                                }, colors = counterButtonColors(), enabled = stepSize.intValue != 1) {
+                                    Text(stringResource(R.string.reset), color = Color.Red)
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_small)))
+                        }
+
+                        Row {
+                            TextField(
+                                value = customTextInput.value,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                onValueChange = {
+                                    customTextInput.value = it
+                                },
+                                label = { Text(stringResource(R.string.custom)) },
+                                singleLine = true,
+                                modifier = Modifier.width(140.dp)
+                            )
+                            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
+                            Button(onClick = {
+                                val value = customTextInput.value.toIntOrNull()
+                                if (value != null) {
+                                    stepSize.intValue = value
+                                    customTextInput.value = ""
+                                } else {
+                                    showSnackBar.value = true
+                                }
+                            }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
+                                Text(stringResource(R.string.set), color = Color.White)
+                            }
+                            val invalidNumberText: String = stringResource(R.string.invalidNumber)
+                            if (showSnackBar.value) {
+                                LaunchedEffect(Unit) {
+                                    customTextInput.value = ""
+                                    snackBarHostState.showSnackbar(message = invalidNumberText)
+                                    showSnackBar.value = false
+                                }
+                            }
                         }
                     }
                 }
