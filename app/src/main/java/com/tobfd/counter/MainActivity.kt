@@ -28,6 +28,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CounterButton() {
     val count = remember { mutableIntStateOf(0) }
@@ -142,11 +144,11 @@ fun CounterButton() {
             Button(onClick = {
                 multiplierIsExpanded.value = !multiplierIsExpanded.value
             }, colors = counterButtonColors()) {
-                Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = colorScheme.secondary)
+                Text("${stringResource(R.string.multiplier)} ${stepSize.intValue}", color = Color.White)
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                 Icon(imageVector = if (animations) Icons.Filled.ArrowDropDown else if (multiplierIsExpanded.value) Icons.Filled.ArrowDropDown else Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = if (multiplierIsExpanded.value) "Collapse multiplier options" else "Expand multiplier options",
-                    tint = colorScheme.secondary,
+                    tint = Color.White,
                     modifier = if (animations) Modifier.rotate(arrowRotation) else Modifier
                 )
             }
@@ -159,7 +161,7 @@ fun CounterButton() {
                         Button(onClick = {
                             stepSize.intValue = step
                         }, colors = counterButtonColors(), enabled = stepSize.intValue != step) {
-                            Text(step.toString(), color = colorScheme.secondary)
+                            Text(step.toString(), color = Color.White)
                         }
                         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_small)))
                     }
@@ -200,7 +202,7 @@ fun CounterButton() {
                             showSnackBar.value = true
                         }
                     }, colors = counterButtonColors(), enabled = customTextInput.value != "") {
-                        Text(stringResource(R.string.set), color = colorScheme.secondary)
+                        Text(stringResource(R.string.set), color = Color.White)
                     }
                     val invalidNumberText: String = stringResource(R.string.invalidNumber)
                     if (showSnackBar.value) {
