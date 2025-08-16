@@ -1,11 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Counter</string>
+    <string name="app_name">Счетчик</string>
     <string name="decrement">Уменьшить</string>
     <string name="increment">Увеличить</string>
-    <string name="reset">Сбросить</string>
+    <string name="reset">Сброс</string>
     <string name="multiplier">Множитель</string>
     <string name="custom">Пользовательский</string>
     <string name="set">Установить</string>
-    <string name="invalidNumber"> Пожалуйста, введите корректное число!</string>
+    <string name="invalidNumber">Пожалуйста, введите корректное число!</string>
+    <string name="settings">Настройки</string>
+    <string name="back">Назад</string>
+    <string name="showresetbutton">Показывать кнопку сброса</string>
+    <string name="showanimation">Анимации</string>
+    <string name="showresetbuttondescription">Будет ли отдельная кнопка сброса для множителя или 1 можно найти в предопределенных значениях.</string>
+    <string name="hapticfeedback">Тактильная обратная связь</string>
+    <string name="apptheme">Тема приложения</string>
+    <string name="darkmode">Темный режим</string>
+    <string name="lightmode">Светлый режим</string>
+    <string name="system">Система</string>
+    <string name="counter_value">Значение счетчика</string>
+    <string name="multiplier_settings">Настройки множителя</string>
 </resources>

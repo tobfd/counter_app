@@ -18,4 +18,6 @@
     <string name="darkmode">Dark Mode</string>
     <string name="lightmode">Light Mode</string>
     <string name="system">System</string>
+    <string name="multiplier_settings">Multiplier-Settings</string>
+    <string name="counter_value">Counter Value</string>
 </resources>
